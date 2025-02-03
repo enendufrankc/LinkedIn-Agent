@@ -1,25 +1,33 @@
 from src.linkedIn_agent.tools.linkedIn_scraper import scrape_linkedin_posts_tool
 from crewai import Agent
+from textwrap import dedent
 from src.linkedIn_agent.clients.llm import openai_client
+from src.linkedIn_agent.prompts.prompt_loader import prompt_loader
+from config.configuration import Config
 
 
-openai_llm = openai_client()
+config = Config()
 
-def linkedin_scraper_agent():
+def linkedin_scraper_agent(user_topic):
+    
+    LINKEDIN_SCRAPER_PROMPT_PATH = config.LINKEDIN_SCRAPER_PROMPT_PATH
+
+    openai_llm = openai_client()
+
+    goal = prompt_loader(LINKEDIN_SCRAPER_PROMPT_PATH, user_topic, "goal")
+    backstory = prompt_loader(LINKEDIN_SCRAPER_PROMPT_PATH, user_topic, "backstory")
 
     # Define the LinkedIn scraper agent
-    linkedin_scraper_agent = Agent(
+    scraper_agent = Agent(
         role="LinkedIn Post Scraper",
-        goal="Your goal is to scrape a LinkedIn profile to get a list of posts from the given profile",
+        goal=goal,
         tools=[scrape_linkedin_posts_tool],
         backstory=dedent(
-            """
-            You are an experienced programmer who excels at web scraping.
-            """
+            backstory
         ),
-        verbose=True,
+        verbose=False,
         allow_delegation=False,
         llm=openai_llm
     )
     
-    return linkedin_scraper_agent
+    return scraper_agent

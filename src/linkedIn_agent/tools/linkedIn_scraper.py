@@ -31,19 +31,19 @@ def scrape_linkedin_posts_fn() -> str:
     password_input.send_keys(linkedin_password)
     password_input.send_keys(Keys.RETURN)
 
-    time.sleep(3)
+    time.sleep(1)
 
     browser.get(f"https://www.linkedin.com/in/{linkedin_profile_name}/recent-activity/all/")
 
     for _ in range(2):
         browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        time.sleep(2)
+        time.sleep(1)
 
     posts = get_linkedin_posts(browser.page_source)
     browser.quit()
 
     # We'll just return 2 of the latest posts, since it should be enough for the LLM to get the overall style
-    return str(posts[:2])
+    return str(posts[:5])
 
 
 @tool("ScrapeLinkedinPosts")
