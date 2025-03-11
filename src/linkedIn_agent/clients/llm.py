@@ -6,11 +6,13 @@ from config.configuration import Config
 config = Config()
 
 api_key = config.OPENAI_API_KEY
+
 model = config.DEPLOYMENT
 mistral_model = config.MISTRAL_DEPLOYMENT
 mistral_api_key = config.MISTRAL_API_KEY
 
 def openai_client():
+    print("API Key: ", api_key)
     openai_llm = ChatOpenAI(
         api_key=api_key, 
         model=model

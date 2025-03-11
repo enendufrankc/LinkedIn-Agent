@@ -55,10 +55,10 @@ def main():
                 )
                 success = post_content.main_func()
             
-            if success:
-                st.success("Post successfully published to LinkedIn!")
-            else:
-                st.error("Failed to publish post to LinkedIn. Please check logs or configurations.")
+                if success:
+                    st.success("Post successfully published to LinkedIn!")
+                else:
+                    st.error("Failed to publish post to LinkedIn. Please check logs or configurations.")
 
 if __name__ == "__main__":
     main()

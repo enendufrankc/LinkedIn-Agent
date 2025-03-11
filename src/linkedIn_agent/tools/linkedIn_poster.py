@@ -141,6 +141,7 @@ class LinkedinAutomate:
         
         return json.dumps(payload_dict)
     
+    
     def post_to_feed(self):
         """
         Makes the POST request to LinkedIn UGC API for the regular feed
